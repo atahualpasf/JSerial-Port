@@ -54,10 +54,14 @@ public class Communicator implements SerialPortEventListener
     //a string for recording what goes on in the program
     //this string is written to the GUI
     private static String logText = "";
-    public Communicator(String portName, String portId) throws IOException
+    public Communicator(String portName, String portId, String selectedPort) throws IOException, Exception
    {
       Communicator.portName = portName;
       Communicator.portId = portId;
+      Communicator.connect(selectedPort);
+      if (!Communicator.getConnected()) {
+          throw new Exception("Lo siento pero no puedo realizar la conexión en el puerto.");
+      }
    }
     
     //search for all the serial ports
@@ -83,10 +87,9 @@ public class Communicator implements SerialPortEventListener
     //pre: ports are already found by using the searchForPorts method
     //post: the connected comm port is stored in commPort, otherwise,
     //an exception is generated
-    public static void connect(JComboBox jCBPorts)
+    public static void connect(String selectedPort)
     {
-        String selectedPort = (String) jCBPorts.getSelectedItem();
-        selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
+        selectedPortIdentifier = (CommPortIdentifier) portMap.get(selectedPort);
 
         CommPort commPort = null;
         try
@@ -201,7 +204,7 @@ public class Communicator implements SerialPortEventListener
 
     final static public boolean getConnected()
     {
-        return bConnected;
+        return Communicator.bConnected;
     }
 
     public static void setConnected(boolean bConnected)
@@ -265,14 +268,10 @@ public class Communicator implements SerialPortEventListener
         }
     }
     
-    public static void main(String portAppName, String portId)
+    public static void main(String portAppName, String portId, String serialPort) throws Exception
    {
       try {
-         //InetAddress host = InetAddress.getByName("192.168.1.102");
-         Communicator communicator = new Communicator(portAppName, portId);
-         //client.send("Hello server.\n");
-         //String response = client.recv();
-         //System.out.println("Client received: " + response);
+         Communicator communicator = new Communicator(portAppName, portId, serialPort);
       }
       catch (IOException e) {
          System.out.println("Caught Exception: " + e.toString());

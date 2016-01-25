@@ -7,7 +7,8 @@
 package View;
 
 import Controller.MainWindowController;
-import Model.Communicator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -120,11 +121,12 @@ public class JFMainWindow extends WindowProperties {
     }//GEN-LAST:event_jCBPortsActionPerformed
 
     private void jBLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLoginActionPerformed
-        // TODO add your handling code here:
-        /*String nickname = (String) jCBNickname.getSelectedItem();
-        initJFMainWindow();
-        if (MainWindowController.sendLoginDataToServer())
-        {
+        try {
+            // TODO add your handling code here:
+            /*String nickname = (String) jCBNickname.getSelectedItem();
+            initJFMainWindow();
+            if (MainWindowController.sendLoginDataToServer())
+            {
             /* Se define un arreglo de string para configurar el servidor   */
             /* 1) Puerto de escucha del servidor (es un string)             */
             /* 2) Clase que se encarga de controlar las peticiones          */
@@ -135,9 +137,12 @@ public class JFMainWindow extends WindowProperties {
             friendsWindow.setTitle(nickname);
             friendsWindow.setVisible(true);
             friendsWindow.setFatherWindow(this, true);
-        }*/
-        Communicator.main("AA", "6264");
-        MainWindowController.connectPort();
+            }*/
+            //Communicator.main("AA", "6264", jCBPorts);
+            MainWindowController.connectPort();
+        } catch (Exception ex) {
+            Logger.getLogger(JFMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBLoginActionPerformed
 
     
