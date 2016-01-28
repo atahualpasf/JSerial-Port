@@ -9,6 +9,9 @@ package Controller;
 import Model.CommPortSender;
 import Model.Communicator;
 import Model.ProtocolImpl;
+import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -24,7 +27,9 @@ public class CommunicationWindowController {
     private static JComboBox jCBTerminalDestino;
     private static JTextField jTFMensajeDestino;
     private static JTextArea jTAConsole;
-    private static String protocolSymbol = ":";
+    private static String PROTOCOL_SYMBOL = ":";
+    private static String PROTOCOL_START = "00000000";
+    private static String PROTOCOL_END = "00000000";
     
     public static void initOutlets(JTextField jTFStatusRecibido, JTextField jTFStatusEnviado, JTextField jTFTerminal,JComboBox jCBTerminalDestino, JTextField jTFMensajeDestino, JTextArea jTAConsole) {
         CommunicationWindowController.jTFStatusRecibido = jTFStatusRecibido;
@@ -35,6 +40,8 @@ public class CommunicationWindowController {
         CommunicationWindowController.jTAConsole = jTAConsole;
         CommunicationWindowController.jTFTerminal.setText(Communicator.getTerminalName());
         loadTerminalDestinoOnComboBox();
+        CommunicationWindowController.jTFStatusEnviado.setBackground(Color.LIGHT_GRAY);
+        CommunicationWindowController.jTFStatusRecibido.setBackground(Color.LIGHT_GRAY);
     }
     
     public static void loadTerminalDestinoOnComboBox() {
@@ -53,37 +60,40 @@ public class CommunicationWindowController {
     public static void sendingMessage() {
         String messageWithoutProtocol = CommunicationWindowController.jTFMensajeDestino.getText();
         if (!messageWithoutProtocol.trim().isEmpty()) {
-            String messageWithProtocol = "00000000" + CommunicationWindowController.protocolSymbol + 
-            CommunicationWindowController.jTFTerminal.getText() + CommunicationWindowController.protocolSymbol + 
-            Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem()) + CommunicationWindowController.protocolSymbol +
-            messageWithoutProtocol + CommunicationWindowController.protocolSymbol + "00000000";
+            CommunicationWindowController.jTFStatusEnviado.setBackground(Color.RED);
+            String messageWithProtocol = "00000000" + CommunicationWindowController.PROTOCOL_SYMBOL + 
+            CommunicationWindowController.jTFTerminal.getText() + CommunicationWindowController.PROTOCOL_SYMBOL + 
+            Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem()) + CommunicationWindowController.PROTOCOL_SYMBOL +
+            messageWithoutProtocol + CommunicationWindowController.PROTOCOL_SYMBOL + "00000000";
             System.out.println("SENDING MESSAGE WITHOUT PROTOCOL: " + messageWithoutProtocol);
             System.out.println("SENDING MESSAGE WITH PROTOCOL: " + messageWithProtocol);
             CommPortSender.send(new ProtocolImpl().getMessage(messageWithProtocol));
-            CommunicationWindowController.jTAConsole.append("ORIGEN - " + 
-            Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem()) + 
-            CommunicationWindowController.protocolSymbol + messageWithoutProtocol + "\n");
+            CommunicationWindowController.jTAConsole.append("DESTINO: " + Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem())
+            + " - MENSAJE: " + messageWithoutProtocol + "\n");
         }
+        CommunicationWindowController.jTFStatusEnviado.setBackground(Color.LIGHT_GRAY);
     }
     
     public static void receivedMessage(String receivedMessage) {
+        CommunicationWindowController.jTFStatusEnviado.setBackground(Color.GREEN);
         System.out.println("RECEIVED MESSAGE WITH PROTOCOL: " + receivedMessage);
-        /*String[] message = msj.split(";");
-        System.out.println(msj);
-        
-        if (message[1].equals(ValoresUniversales.getNumterminal())){
-            
-            System.out.println("DESTINO ES  "+ ValoresUniversales.getNumterminal()+"   MENSAJE ES PARA   " +message[2]);
-                campomsj.setText(message[0]);
-                terminalorigen.setText(message[2]);
-            
-        } else {
-            
-            System.out.println("DESTINO ES  "+ ValoresUniversales.getNumterminal()+"   MENSAJE ES PARA   " +message[2]);
-            // Primer campo TERMINAL ORIGEN, segundo campo MENSAJE A ENVIAR, tercer campo PUERTO
-         //   ControladorPrincipalSerial.enviandoMensaje(message[2], message[0], message[1], ValoresUniversales.getPuerto());
-        
-        }*/
+        String[] message = receivedMessage.split(CommunicationWindowController.PROTOCOL_SYMBOL);
+        if (message[0].equals(CommunicationWindowController.PROTOCOL_START) && 
+        message[4].equals(CommunicationWindowController.PROTOCOL_END)) {
+            if (message[2].equals(CommunicationWindowController.jTFTerminal.getText())) {
+                CommunicationWindowController.jTAConsole.append("ORIGEN: " + message[1] + " - MENSAJE: " + message[3] + "\n");
+            } else if (message[2].equals("99")) {
+                if (!message[1].equals(CommunicationWindowController.jTFTerminal.getText())) {
+                    CommunicationWindowController.jTAConsole.append("ORIGEN: " + message[1] + " - MENSAJE: " + message[3] + "\n");
+                    CommPortSender.send(new ProtocolImpl().getMessage(receivedMessage));
+                    System.out.println("BROADCAST - FORWARD MESSAGE");
+                }
+            } else {
+                CommPortSender.send(new ProtocolImpl().getMessage(receivedMessage));
+                System.out.println("FORWARD MESSAGE");
+            }
+        }
+        CommunicationWindowController.jTFStatusEnviado.setBackground(Color.LIGHT_GRAY);
     }
     
 }

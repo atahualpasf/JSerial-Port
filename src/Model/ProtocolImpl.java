@@ -33,7 +33,7 @@ public class ProtocolImpl implements Protocol {
         if (tail!=0) {  
   
             String message = getMessage(buffer, tail);  
-            System.out.println("RECEIVED MESSAGE: " + message);  
+            //System.out.println("RECEIVED MESSAGE: " + message);  
             
             CommunicationWindowController.receivedMessage(message);
             
