@@ -104,6 +104,10 @@ public class Communicator implements SerialPortEventListener
 
             //logging
             logText = selectedPort + " opened successfully.";
+            
+            // setup serial port reader  
+            CommPortSender.setWriterStream(serialPort.getOutputStream());
+            new CommPortReceiver(serialPort.getInputStream()).start();
             //window.txtLog.setForeground(Color.black);
             //window.txtLog.append(logText + "\n");
 
@@ -132,11 +136,10 @@ public class Communicator implements SerialPortEventListener
     //open the input and output streams
     //pre: an open port
     //post: initialized intput and output streams for use to communicate data
-    public boolean initIOStream()
+    public static boolean initIOStream()
     {
-        /*//return value for whather opening the streams is successful or not
+        //return value for whather opening the streams is successful or not
         boolean successful = false;
-
         try {
             //
             input = serialPort.getInputStream();
@@ -151,14 +154,14 @@ public class Communicator implements SerialPortEventListener
             //window.txtLog.setForeground(Color.red);
             //window.txtLog.append(logText + "\n");
             return successful;
-        }*/
-        return true;
+        }
+        //return true;
     }
 
     //starts the event listener that knows whenever data is available to be read
     //pre: an open serial port
     //post: an event listener for the serial port that knows when data is recieved
-    public void initListener()
+    public static void initListener()
     {
         /*try
         {
@@ -176,9 +179,9 @@ public class Communicator implements SerialPortEventListener
     //disconnect the serial port
     //pre: an open serial port
     //post: clsoed serial port
-    public void disconnect()
+    public static void disconnect()
     {
-        /*//close the serial port
+        //close the serial port
         try
         {
             writeData(0, 0);
@@ -199,7 +202,7 @@ public class Communicator implements SerialPortEventListener
             logText = "Failed to close " + serialPort.getName() + "(" + e.toString() + ")";
             //window.txtLog.setForeground(Color.red);
             //window.txtLog.append(logText + "\n");
-        }*/
+        }
     }
 
     final static public boolean getConnected()
@@ -211,12 +214,22 @@ public class Communicator implements SerialPortEventListener
     {
         Communicator.bConnected = bConnected;
     }
+    
+    final static public String getPortName()
+    {
+        return Communicator.portName;
+    }
+    
+    public static void setPortName(String portName)
+    {
+        Communicator.portName = portName;
+    }
 
     //what happens when data is received
     //pre: serial event is triggered
     //post: processing on the data it reads
     public void serialEvent(SerialPortEvent evt) {
-        if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
+        /*if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
         {
             try
             {
@@ -226,6 +239,7 @@ public class Communicator implements SerialPortEventListener
                 {
                     logText = new String(new byte[] {singleData});
                     //window.txtLog.append(logText);
+                    System.out.println(logText);
                 }
                 else
                 {
@@ -238,13 +252,13 @@ public class Communicator implements SerialPortEventListener
                 //window.txtLog.setForeground(Color.red);
                 //window.txtLog.append(logText + "\n");
             }
-        }
+        }*/
     }
 
     //method that can be called to send data
     //pre: open serial port
     //post: data sent to the other device
-    public void writeData(int leftThrottle, int rightThrottle)
+    public static void writeData(int leftThrottle, int rightThrottle)
     {
         try
         {

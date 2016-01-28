@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author AtahualpaSF
+ * @author Atahualpa Silva F. <https://github.com/atahualpasf>
  */
 public class JFMainWindow extends WindowProperties {
 
@@ -46,22 +46,24 @@ public class JFMainWindow extends WindowProperties {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setFont(new java.awt.Font("Comic Sans MS", 1, 32)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 204, 204));
+        jLabel4.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 28)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 153, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("jSerial-Port");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel4.setMaximumSize(new java.awt.Dimension(100, 100));
 
-        jCBPorts.setFont(new java.awt.Font("Comic Sans MS", 0, 13)); // NOI18N
+        jCBPorts.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 13)); // NOI18N
         jCBPorts.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCBPortsActionPerformed(evt);
             }
         });
 
+        jPFPassword.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
         jPFPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
+        jBLogin.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
         jBLogin.setText("CONNECT");
         jBLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,24 +75,25 @@ public class JFMainWindow extends WindowProperties {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBPorts, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCBPorts, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(18, 18, 18)
                 .addComponent(jPFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(jCBPorts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -122,24 +125,12 @@ public class JFMainWindow extends WindowProperties {
 
     private void jBLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLoginActionPerformed
         try {
-            // TODO add your handling code here:
-            /*String nickname = (String) jCBNickname.getSelectedItem();
-            initJFMainWindow();
-            if (MainWindowController.sendLoginDataToServer())
-            {
-            /* Se define un arreglo de string para configurar el servidor   */
-            /* 1) Puerto de escucha del servidor (es un string)             */
-            /* 2) Clase que se encarga de controlar las peticiones          */
-            /*String[] parameters = {Util.portClient, "controller.ManagementRequest"};
-            Server.main(parameters);
-            Util.nickname = nickname;
-            JFFriendsWindow friendsWindow = new JFFriendsWindow();
-            friendsWindow.setTitle(nickname);
-            friendsWindow.setVisible(true);
-            friendsWindow.setFatherWindow(this, true);
-            }*/
-            //Communicator.main("AA", "6264", jCBPorts);
-            MainWindowController.connectPort();
+            if (MainWindowController.connectPort()) {
+                JFCommunicationWindow communicationWindow = new JFCommunicationWindow();
+                communicationWindow.setTitle("Prueba");
+                communicationWindow.setVisible(true);
+                communicationWindow.setFatherWindow(this, true);
+            }
         } catch (Exception ex) {
             Logger.getLogger(JFMainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

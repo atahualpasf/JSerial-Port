@@ -25,9 +25,8 @@ public class MainWindowController {
     }
     
     public static boolean connectPort() throws Exception {
-        //Communicator.connect(jCBPorts);
         String selectedPort = (String) jCBPorts.getSelectedItem();
         Communicator.main("AA", "6264", selectedPort);
-        return true;
+        return Communicator.getConnected();
     }
 }
