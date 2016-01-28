@@ -38,9 +38,9 @@ public class JFCommunicationWindow extends WindowProperties {
         jPanel1 = new javax.swing.JPanel();
         jTFStatusRecibido = new javax.swing.JTextField();
         jTFMensajeDestino = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jBEnviar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtLog = new javax.swing.JTextArea();
+        jTAConsole = new javax.swing.JTextArea();
         jLabel7 = new javax.swing.JLabel();
         jTFStatusEnviado = new javax.swing.JTextField();
         jTFTerminal = new javax.swing.JTextField();
@@ -56,7 +56,7 @@ public class JFCommunicationWindow extends WindowProperties {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jCBTerminalDestino = new javax.swing.JComboBox();
-        jButton3 = new javax.swing.JButton();
+        jBCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,20 +65,20 @@ public class JFCommunicationWindow extends WindowProperties {
 
         jTFStatusRecibido.setEditable(false);
 
-        jButton2.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
-        jButton2.setText("ENVIAR");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jBEnviar.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
+        jBEnviar.setText("ENVIAR");
+        jBEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jBEnviarActionPerformed(evt);
             }
         });
 
-        txtLog.setEditable(false);
-        txtLog.setColumns(20);
-        txtLog.setLineWrap(true);
-        txtLog.setRows(5);
-        txtLog.setFocusable(false);
-        jScrollPane2.setViewportView(txtLog);
+        jTAConsole.setEditable(false);
+        jTAConsole.setColumns(20);
+        jTAConsole.setLineWrap(true);
+        jTAConsole.setRows(5);
+        jTAConsole.setFocusable(false);
+        jScrollPane2.setViewportView(jTAConsole);
 
         jLabel7.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(51, 153, 255));
@@ -204,11 +204,11 @@ public class JFCommunicationWindow extends WindowProperties {
         jCBTerminalDestino.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
         jCBTerminalDestino.setToolTipText("");
 
-        jButton3.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
-        jButton3.setText("CERRAR SESIÓN");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jBCerrarSesion.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
+        jBCerrarSesion.setText("CERRAR SESIÓN");
+        jBCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jBCerrarSesionActionPerformed(evt);
             }
         });
 
@@ -228,7 +228,7 @@ public class JFCommunicationWindow extends WindowProperties {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jBEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(99, 99, 99))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(41, 41, 41)
@@ -251,7 +251,7 @@ public class JFCommunicationWindow extends WindowProperties {
                                             .addComponent(jTFTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jBCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -269,7 +269,7 @@ public class JFCommunicationWindow extends WindowProperties {
                                 .addComponent(jTFStatusEnviado, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTFStatusRecibido, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jBCerrarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTFTerminal, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -284,7 +284,7 @@ public class JFCommunicationWindow extends WindowProperties {
                         .addGap(30, 30, 30)
                         .addComponent(jCBTerminalDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2))
                 .addGap(27, 27, 27)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -304,45 +304,21 @@ public class JFCommunicationWindow extends WindowProperties {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jBEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBEnviarActionPerformed
         // TODO add your handling code here:
-        /*if ((Util.ipServer != jTFServerIp.getText()) || (Util.portServer != jTFServerPort.getText()) || 
-            (Util.ipClient != jTFClientIp.getText()) || (Util.portClient != jTFClientPort.getText()) || (Util.pathImage != jTFImagePath.getText()))
-        {
-            if((jTFServerIp.getText().trim().length() != 0) && (jTFServerPort.getText().length() != 0) && (jTFClientPort.getText().length() != 0))
-            {
-                Util.ipServer   = jTFServerIp.getText() ;
-                Util.portServer = jTFServerPort.getText();
-                Util.ipClient   = jTFClientIp.getText();
-                Util.portClient = jTFClientPort.getText();
-                Util.pathImage  = jTFImagePath.getText();
-                PreferencesWindowController.removePreferences();
-                PreferencesWindowController.createPreferences();
-                restoreFatherWindow();
-                //Util.MainLlamadaEditarPreferncias = false;
-            }
-        }
-        else 
-        {
-            restoreFatherWindow();
-            //Util.MainLlamadaEditarPreferncias = false;
-        }*/
-        if (Communicator.getConnected()) {
-            System.out.println(Communicator.getTerminalName());
-            if (Communicator.initIOStream() == true)
-            {
-             CommunicationWindowController.senMessage();
-            }
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        CommunicationWindowController.sendingMessage();
+    }//GEN-LAST:event_jBEnviarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jBCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCerrarSesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        if (!CommunicationWindowController.disconnect()) {
+            restoreFatherWindow();
+        }
+    }//GEN-LAST:event_jBCerrarSesionActionPerformed
 
     private void initJFCommunicationWindow()
     {
-        CommunicationWindowController.initOutlets(jTFStatusRecibido, jTFStatusEnviado, jTFTerminal, jCBTerminalDestino, jTFMensajeDestino);
+        CommunicationWindowController.initOutlets(jTFStatusRecibido, jTFStatusEnviado, jTFTerminal, jCBTerminalDestino, jTFMensajeDestino, jTAConsole);
     }
     
     /**
@@ -382,8 +358,8 @@ public class JFCommunicationWindow extends WindowProperties {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jBCerrarSesion;
+    private javax.swing.JButton jBEnviar;
     private javax.swing.JComboBox jCBTerminalDestino;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -400,10 +376,10 @@ public class JFCommunicationWindow extends WindowProperties {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinner1;
+    public javax.swing.JTextArea jTAConsole;
     private javax.swing.JTextField jTFMensajeDestino;
     private javax.swing.JTextField jTFStatusEnviado;
     private javax.swing.JTextField jTFStatusRecibido;
     private javax.swing.JTextField jTFTerminal;
-    public javax.swing.JTextArea txtLog;
     // End of variables declaration//GEN-END:variables
 }

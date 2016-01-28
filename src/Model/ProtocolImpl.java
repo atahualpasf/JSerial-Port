@@ -5,13 +5,15 @@
  */
 package Model;
 
+import Controller.CommunicationWindowController;
+
 public class ProtocolImpl implements Protocol {  
    
     byte[] buffer = new byte[1024];  
     int tail = 0;  
       
     public void onReceive(byte b) {  
-        // simple protocol: each message ends with new line  
+
         if (b=='\n') {  
             onMessage();  
         } else {  
@@ -29,24 +31,17 @@ public class ProtocolImpl implements Protocol {
      */  
     private void onMessage() {  
         if (tail!=0) {  
-            // constructing message  
+  
             String message = getMessage(buffer, tail);  
-            System.out.println("MENSAJE RECIBIDO: " + message);  
-              
-            // this logic should be placed in some kind of   
-            // message interpreter class not here  
-            if (" -  HELLO".equals(message)) {
-                System.out.println("Es un hellou");
-                CommPortSender.send(getMessage("OK"));  
-            } else if ("- OK".equals(message)) {  
-                CommPortSender.send(getMessage("OK ACK"));  
-            }
+            System.out.println("RECEIVED MESSAGE: " + message);  
+            
+            CommunicationWindowController.receivedMessage(message);
+            
             System.out.println(message.charAt(4));
             tail = 0;  
         }  
     }  
       
-    // helper methods   
     public byte[] getMessage(String message) {  
         return (message+"\n").getBytes();  
     }  
