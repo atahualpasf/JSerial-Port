@@ -37,8 +37,9 @@ public class JFMainWindow extends WindowProperties {
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jCBPorts = new javax.swing.JComboBox();
-        jPFPassword = new javax.swing.JPasswordField();
         jBLogin = new javax.swing.JButton();
+        jCBTerminals = new javax.swing.JComboBox();
+        jLError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(188, 255, 250));
@@ -60,9 +61,6 @@ public class JFMainWindow extends WindowProperties {
             }
         });
 
-        jPFPassword.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
-        jPFPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
         jBLogin.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
         jBLogin.setText("CONNECT");
         jBLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +69,17 @@ public class JFMainWindow extends WindowProperties {
             }
         });
 
+        jCBTerminals.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 13)); // NOI18N
+        jCBTerminals.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCBTerminalsActionPerformed(evt);
+            }
+        });
+
+        jLError.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 10)); // NOI18N
+        jLError.setForeground(new java.awt.Color(255, 0, 0));
+        jLError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -78,15 +87,21 @@ public class JFMainWindow extends WindowProperties {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCBPorts, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(66, 66, 66)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jBLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                                    .addComponent(jCBPorts, 0, 161, Short.MAX_VALUE)
+                                    .addComponent(jCBTerminals, 0, 161, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 33, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jLError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,10 +109,12 @@ public class JFMainWindow extends WindowProperties {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPFPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
+                .addComponent(jCBTerminals, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
                 .addComponent(jCBPorts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -112,7 +129,7 @@ public class JFMainWindow extends WindowProperties {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -124,22 +141,23 @@ public class JFMainWindow extends WindowProperties {
     }//GEN-LAST:event_jCBPortsActionPerformed
 
     private void jBLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLoginActionPerformed
-        try {
-            if (MainWindowController.connectPort()) {
-                JFCommunicationWindow communicationWindow = new JFCommunicationWindow();
-                communicationWindow.setTitle("Prueba");
-                communicationWindow.setVisible(true);
-                communicationWindow.setFatherWindow(this, true);
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(JFMainWindow.class.getName()).log(Level.SEVERE, null, ex);
+        if (MainWindowController.connectPort()) {
+            JFCommunicationWindow communicationWindow = new JFCommunicationWindow();
+            communicationWindow.setTitle("Prueba");
+            communicationWindow.setVisible(true);
+            communicationWindow.setFatherWindow(this, true);
+        } else {
+            jLError.setText("Puerto en uso, por favor intente más tarde.");
         }
     }//GEN-LAST:event_jBLoginActionPerformed
 
+    private void jCBTerminalsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBTerminalsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCBTerminalsActionPerformed
+
     
-    private void initJFMainWindow()
-    {
-        MainWindowController.initOutlets(jCBPorts);
+    private void initJFMainWindow() {
+        MainWindowController.initOutlets(jCBPorts, jCBTerminals);
     }
     
     /**
@@ -181,8 +199,9 @@ public class JFMainWindow extends WindowProperties {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBLogin;
     private javax.swing.JComboBox jCBPorts;
+    private javax.swing.JComboBox jCBTerminals;
+    private javax.swing.JLabel jLError;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPFPassword;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

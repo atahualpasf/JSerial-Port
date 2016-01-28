@@ -17,16 +17,26 @@ import javax.swing.JComboBox;
  */
 public class MainWindowController {
     private static JComboBox jCBPorts;
+    private static JComboBox jCBTerminals;
     private static Enumeration ports = null;
     
-    public static void initOutlets(JComboBox jCBPorts) {
+    public static void initOutlets(JComboBox jCBPorts, JComboBox jCBTerminals) {
         MainWindowController.jCBPorts = jCBPorts;
+        MainWindowController.jCBTerminals = jCBTerminals;
         Communicator.searchForPorts(MainWindowController.jCBPorts);
+        loadTerminalsOnComboBox();
     }
     
-    public static boolean connectPort() throws Exception {
+    public static boolean connectPort() {
         String selectedPort = (String) jCBPorts.getSelectedItem();
-        Communicator.main("AA", "6264", selectedPort);
+        String selectedTerminal = Integer.toString((int) jCBTerminals.getSelectedItem());
+        Communicator.main("JSerial-Terminal", selectedTerminal, selectedPort);
         return Communicator.getConnected();
+    }
+    
+    public static void loadTerminalsOnComboBox() {
+        for (int i = 1 ; i < 99 ; i++) {
+            MainWindowController.jCBTerminals.addItem(i);
+        }
     }
 }

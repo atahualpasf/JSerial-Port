@@ -48,27 +48,22 @@ public class Communicator implements SerialPortEventListener
     final static int SPACE_ASCII = 32;
     final static int DASH_ASCII = 45;
     final static int NEW_LINE_ASCII = 10;
-    private static String portName = null;
-    private static String portId = null;
+    private static String appName = null;
+    private static String terminal = null;
 
     //a string for recording what goes on in the program
     //this string is written to the GUI
     private static String logText = "";
-    public Communicator(String portName, String portId, String selectedPort) throws IOException, Exception
-   {
-      Communicator.portName = portName;
-      Communicator.portId = portId;
+    public Communicator(String appName, String selectedTerminal, String selectedPort) {
+      Communicator.appName = appName;
+      Communicator.terminal = selectedTerminal;
       Communicator.connect(selectedPort);
-      if (!Communicator.getConnected()) {
-          throw new Exception("Lo siento pero no puedo realizar la conexión en el puerto.");
-      }
    }
     
     //search for all the serial ports
     //pre: none
     //post: adds all the found ports to a combo box on the GUI
-    public static void searchForPorts(JComboBox jCBPorts)
-    {
+    public static void searchForPorts(JComboBox jCBPorts) {
         ports = CommPortIdentifier.getPortIdentifiers();
         while (ports.hasMoreElements())
         {
@@ -87,15 +82,14 @@ public class Communicator implements SerialPortEventListener
     //pre: ports are already found by using the searchForPorts method
     //post: the connected comm port is stored in commPort, otherwise,
     //an exception is generated
-    public static void connect(String selectedPort)
-    {
+    public static void connect(String selectedPort) {
         selectedPortIdentifier = (CommPortIdentifier) portMap.get(selectedPort);
 
         CommPort commPort = null;
         try
         {
             //the method below returns an object of type CommPort
-            commPort = selectedPortIdentifier.open(portName, TIMEOUT);
+            commPort = selectedPortIdentifier.open(terminal, TIMEOUT);
             //the CommPort object can be casted to a SerialPort object
             serialPort = (SerialPort)commPort;
             System.out.println(commPort.getName());
@@ -136,8 +130,7 @@ public class Communicator implements SerialPortEventListener
     //open the input and output streams
     //pre: an open port
     //post: initialized intput and output streams for use to communicate data
-    public static boolean initIOStream()
-    {
+    public static boolean initIOStream() {
         //return value for whather opening the streams is successful or not
         boolean successful = false;
         try {
@@ -161,8 +154,7 @@ public class Communicator implements SerialPortEventListener
     //starts the event listener that knows whenever data is available to be read
     //pre: an open serial port
     //post: an event listener for the serial port that knows when data is recieved
-    public static void initListener()
-    {
+    public static void initListener() {
         /*try
         {
             serialPort.addEventListener(this);
@@ -179,8 +171,7 @@ public class Communicator implements SerialPortEventListener
     //disconnect the serial port
     //pre: an open serial port
     //post: clsoed serial port
-    public static void disconnect()
-    {
+    public static void disconnect() {
         //close the serial port
         try
         {
@@ -205,24 +196,20 @@ public class Communicator implements SerialPortEventListener
         }
     }
 
-    final static public boolean getConnected()
-    {
+    final static public boolean getConnected() {
         return Communicator.bConnected;
     }
 
-    public static void setConnected(boolean bConnected)
-    {
+    public static void setConnected(boolean bConnected) {
         Communicator.bConnected = bConnected;
     }
     
-    final static public String getPortName()
-    {
-        return Communicator.portName;
+    final static public String getTerminalName() {
+        return Communicator.terminal;
     }
     
-    public static void setPortName(String portName)
-    {
-        Communicator.portName = portName;
+    public static void setTerminalName(String terminal) {
+        Communicator.terminal = terminal;
     }
 
     //what happens when data is received
@@ -258,8 +245,7 @@ public class Communicator implements SerialPortEventListener
     //method that can be called to send data
     //pre: open serial port
     //post: data sent to the other device
-    public static void writeData(int leftThrottle, int rightThrottle)
-    {
+    public static void writeData(int leftThrottle, int rightThrottle) {
         try
         {
             output.write(leftThrottle);
@@ -282,13 +268,7 @@ public class Communicator implements SerialPortEventListener
         }
     }
     
-    public static void main(String portAppName, String portId, String serialPort) throws Exception
-   {
-      try {
-         Communicator communicator = new Communicator(portAppName, portId, serialPort);
-      }
-      catch (IOException e) {
-         System.out.println("Caught Exception: " + e.toString());
-      }
+    public static void main(String portAppName, String portId, String serialPort) {
+        Communicator communicator = new Communicator(portAppName, portId, serialPort);
    }
 }
