@@ -1,16 +1,4 @@
 # Development files
 *.DS_Store
-.idea
-/nbproject/private/
-/nbproject/
-/node_modules/
-TODO
 *.zip
-test.html
 *.log
-test.html
-/plugins/jquery-validation/*
-
-# Archivos de configuración
-/conf/
-reports/
