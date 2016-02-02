@@ -308,6 +308,9 @@ public class JFCommunicationWindow extends WindowProperties {
 
     private void jBCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCerrarSesionActionPerformed
         // TODO add your handling code here:
+        if (!CommunicationWindowController.closeConnection()) {
+            restoreFatherWindow();
+        }
     }//GEN-LAST:event_jBCerrarSesionActionPerformed
 
     private void initJFCommunicationWindow()

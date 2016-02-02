@@ -18,9 +18,6 @@ import javax.swing.JComboBox;
  * @author Atahualpa Silva F. <https://github.com/atahualpasf>
  */
 public class Communicator {
-    //passed from main GUI
-    //GUI window = null;
-
     //for containing the ports that will be found
     private static Enumeration ports = null;
     //map the port names to CommPortIdentifiers
@@ -129,11 +126,11 @@ public class Communicator {
     //post: clsoed serial port
     public static void disconnect() {
         //close the serial port
-        try
-        {
+        try {
+            //serialPort.removeEventListener();
+            serialPort.getOutputStream().close();
+            serialPort.getInputStream().close();
             serialPort.close();
-            input.close();
-            output.close();
             setConnected(false);
 
             logText = "Disconnected.";
@@ -141,9 +138,9 @@ public class Communicator {
             //window.txtLog.setForeground(Color.red);
             //window.txtLog.append(logText + "\n");
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             logText = "Failed to close " + serialPort.getName() + "(" + e.toString() + ")";
+            System.out.println(logText);
             //window.txtLog.setForeground(Color.red);
             //window.txtLog.append(logText + "\n");
         }

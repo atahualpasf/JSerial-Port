@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author AtahualpaSF
+ * @author Atahualpa Silva F. <https://github.com/atahualpasf>
  */
 public class WindowProperties extends JFrame {
     private JFrame  fatherWindow;

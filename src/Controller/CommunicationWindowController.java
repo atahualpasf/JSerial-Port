@@ -27,9 +27,10 @@ public class CommunicationWindowController {
     private static JComboBox jCBTerminalDestino;
     private static JTextField jTFMensajeDestino;
     private static JTextArea jTAConsole;
-    private static String PROTOCOL_SYMBOL = ":";
-    private static String PROTOCOL_START = "00000000";
-    private static String PROTOCOL_END = "00000000";
+    private static final String PROTOCOL_TOKEN = "1";
+    private static final String PROTOCOL_SYMBOL = ":";
+    private static final String PROTOCOL_START = "00000000";
+    private static final String PROTOCOL_END = "00000000";
     
     public static void initOutlets(JTextField jTFStatusRecibido, JTextField jTFStatusEnviado, JTextField jTFTerminal,JComboBox jCBTerminalDestino, JTextField jTFMensajeDestino, JTextArea jTAConsole) {
         CommunicationWindowController.jTFStatusRecibido = jTFStatusRecibido;
@@ -61,13 +62,21 @@ public class CommunicationWindowController {
         String messageWithoutProtocol = CommunicationWindowController.jTFMensajeDestino.getText();
         if (!messageWithoutProtocol.trim().isEmpty()) {
             CommunicationWindowController.jTFStatusEnviado.setBackground(Color.RED);
-            String messageWithProtocol = "00000000" + CommunicationWindowController.PROTOCOL_SYMBOL + 
-            CommunicationWindowController.jTFTerminal.getText() + CommunicationWindowController.PROTOCOL_SYMBOL + 
-            Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem()) + CommunicationWindowController.PROTOCOL_SYMBOL +
-            messageWithoutProtocol + CommunicationWindowController.PROTOCOL_SYMBOL + "00000000";
+            String messageWithProtocol = CommunicationWindowController.PROTOCOL_START + 
+                                         CommunicationWindowController.PROTOCOL_SYMBOL + 
+                                         CommunicationWindowController.jTFTerminal.getText() + 
+                                         CommunicationWindowController.PROTOCOL_SYMBOL + 
+                                         Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem()) + 
+                                         CommunicationWindowController.PROTOCOL_SYMBOL +
+                                         messageWithoutProtocol + 
+                                         CommunicationWindowController.PROTOCOL_SYMBOL + 
+                                         CommunicationWindowController.PROTOCOL_END;
+            
             System.out.println("SENDING MESSAGE WITHOUT PROTOCOL: " + messageWithoutProtocol);
             System.out.println("SENDING MESSAGE WITH PROTOCOL: " + messageWithProtocol);
+            
             CommPortSender.send(new ProtocolImpl().getMessage(messageWithProtocol));
+            
             CommunicationWindowController.jTAConsole.append("DESTINO: " + Integer.toString((int) CommunicationWindowController.jCBTerminalDestino.getSelectedItem())
             + " - MENSAJE: " + messageWithoutProtocol + "\n");
         }
@@ -94,6 +103,11 @@ public class CommunicationWindowController {
             }
         }
         CommunicationWindowController.jTFStatusEnviado.setBackground(Color.LIGHT_GRAY);
+    }
+    
+    public static boolean closeConnection() {
+        Communicator.disconnect();
+        return Communicator.getConnected();
     }
     
 }
