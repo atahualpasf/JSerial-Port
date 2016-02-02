@@ -7,9 +7,6 @@
 package View;
 
 import Controller.CommunicationWindowController;
-import Model.Communicator;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  *
@@ -311,9 +308,6 @@ public class JFCommunicationWindow extends WindowProperties {
 
     private void jBCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBCerrarSesionActionPerformed
         // TODO add your handling code here:
-        if (!CommunicationWindowController.disconnect()) {
-            restoreFatherWindow();
-        }
     }//GEN-LAST:event_jBCerrarSesionActionPerformed
 
     private void initJFCommunicationWindow()

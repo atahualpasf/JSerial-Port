@@ -11,15 +11,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.TooManyListenersException;
 import javax.swing.JComboBox;
 
 /**
  *
  * @author Atahualpa Silva F. <https://github.com/atahualpasf>
  */
-public class Communicator implements SerialPortEventListener
-{
+public class Communicator {
     //passed from main GUI
     //GUI window = null;
 
@@ -45,11 +43,9 @@ public class Communicator implements SerialPortEventListener
     final static int TIMEOUT = 2000;
 
     //some ascii values for for certain things
-    final static int SPACE_ASCII = 32;
-    final static int DASH_ASCII = 45;
-    final static int NEW_LINE_ASCII = 10;
     private static String appName = null;
     private static String terminal = null;
+    private static String port = null;
 
     //a string for recording what goes on in the program
     //this string is written to the GUI
@@ -57,6 +53,7 @@ public class Communicator implements SerialPortEventListener
     public Communicator(String appName, String selectedTerminal, String selectedPort) {
       Communicator.appName = appName;
       Communicator.terminal = selectedTerminal;
+      Communicator.port = selectedPort;
       Communicator.connect(selectedPort);
    }
     
@@ -127,47 +124,6 @@ public class Communicator implements SerialPortEventListener
         }
     }
 
-    //open the input and output streams
-    //pre: an open port
-    //post: initialized intput and output streams for use to communicate data
-    public static boolean initIOStream() {
-        //return value for whather opening the streams is successful or not
-        boolean successful = false;
-        try {
-            //
-            input = serialPort.getInputStream();
-            output = serialPort.getOutputStream();
-            writeData(0, 0);
-            
-            successful = true;
-            return successful;
-        }
-        catch (IOException e) {
-            logText = "I/O Streams failed to open. (" + e.toString() + ")";
-            //window.txtLog.setForeground(Color.red);
-            //window.txtLog.append(logText + "\n");
-            return successful;
-        }
-        //return true;
-    }
-
-    //starts the event listener that knows whenever data is available to be read
-    //pre: an open serial port
-    //post: an event listener for the serial port that knows when data is recieved
-    public static void initListener() {
-        /*try
-        {
-            serialPort.addEventListener(this);
-            serialPort.notifyOnDataAvailable(true);
-        }
-        catch (TooManyListenersException e)
-        {
-            logText = "Too many listeners. (" + e.toString() + ")";
-            //window.txtLog.setForeground(Color.red);
-            //window.txtLog.append(logText + "\n");
-        }*/
-    }
-
     //disconnect the serial port
     //pre: an open serial port
     //post: clsoed serial port
@@ -175,16 +131,13 @@ public class Communicator implements SerialPortEventListener
         //close the serial port
         try
         {
-            writeData(0, 0);
-
-            serialPort.removeEventListener();
             serialPort.close();
             input.close();
             output.close();
             setConnected(false);
-            //window.keybindingController.toggleControls();
 
             logText = "Disconnected.";
+            System.out.println("Terminal:" + Communicator.getTerminalName() + " - Port:" + Communicator.getPort());
             //window.txtLog.setForeground(Color.red);
             //window.txtLog.append(logText + "\n");
         }
@@ -211,61 +164,13 @@ public class Communicator implements SerialPortEventListener
     public static void setTerminalName(String terminal) {
         Communicator.terminal = terminal;
     }
-
-    //what happens when data is received
-    //pre: serial event is triggered
-    //post: processing on the data it reads
-    public void serialEvent(SerialPortEvent evt) {
-        /*if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
-        {
-            try
-            {
-                byte singleData = (byte)input.read();
-
-                if (singleData != NEW_LINE_ASCII)
-                {
-                    logText = new String(new byte[] {singleData});
-                    //window.txtLog.append(logText);
-                    System.out.println(logText);
-                }
-                else
-                {
-                    //window.txtLog.append("\n");
-                }
-            }
-            catch (Exception e)
-            {
-                logText = "Failed to read data. (" + e.toString() + ")";
-                //window.txtLog.setForeground(Color.red);
-                //window.txtLog.append(logText + "\n");
-            }
-        }*/
+    
+    final static public String getPort() {
+        return Communicator.port;
     }
-
-    //method that can be called to send data
-    //pre: open serial port
-    //post: data sent to the other device
-    public static void writeData(int leftThrottle, int rightThrottle) {
-        try
-        {
-            output.write(leftThrottle);
-            output.flush();
-            //this is a delimiter for the data
-            output.write(DASH_ASCII);
-            output.flush();
-            
-            output.write(rightThrottle);
-            output.flush();
-            //will be read as a byte so it is a space key
-            output.write(SPACE_ASCII);
-            output.flush();
-        }
-        catch (Exception e)
-        {
-            logText = "Failed to write data. (" + e.toString() + ")";
-            //window.txtLog.setForeground(Color.red);
-            //window.txtLog.append(logText + "\n");
-        }
+    
+    public static void setPort(String port) {
+        Communicator.port = port;
     }
     
     public static void main(String portAppName, String portId, String serialPort) {
